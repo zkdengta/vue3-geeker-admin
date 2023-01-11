@@ -1,12 +1,7 @@
 <template>
-  <ElConfigProvider>
-		<RouterView></RouterView>
-	</ElConfigProvider>
+	<el-config-provider>
+		<router-view></router-view>
+	</el-config-provider>
 </template>
 
-
-<script setup lang="ts">
-
-
-</script>
-
+<script setup lang="ts"></script>
