@@ -11,8 +11,12 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "element-plus": "^2.2.28",
+    "pinia": "^2.0.28",
     "prettier": "^2.8.1",
-    "vue": "^3.2.45"
+    "sass": "^1.57.1",
+    "vue": "^3.2.45",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
