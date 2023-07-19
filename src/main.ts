@@ -17,7 +17,7 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/styles/theme/element-dark.scss";
 // custom element css
 import "@/styles/element.scss";
-// vue Router
+// vue Router 引入路由模块
 import router from "@/routers/index";
 // // vue i18n
 // import I18n from "@/languages/index";

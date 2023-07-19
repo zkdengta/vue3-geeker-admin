@@ -1,8 +1,8 @@
 import { defineConfig, loadEnv, ConfigEnv, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import * as path from "path";
-import { resolve } from "path";
 import { wrapperEnv } from "./src/utils/getEnv";
+import { createHtmlPlugin } from "vite-plugin-html";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -10,7 +10,16 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 	const viteEnv = wrapperEnv(env);
 
 	return {
-		plugins: [vue()],
+		plugins: [
+			vue(),
+			createHtmlPlugin({
+				inject: {
+					data: {
+						title: viteEnv.VITE_GLOB_APP_TITLE
+					}
+				}
+			})
+		],
 		base: "./",
 		resolve: {
 			alias: {

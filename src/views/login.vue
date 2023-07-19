@@ -44,8 +44,16 @@ import type { ElForm } from "element-plus";
 import { useRouter } from "vue-router";
 import { loginApi } from "@/api/modules/login";
 import md5 from "js-md5";
+import { GlobalStore } from "@/stores";
+import { initDynamicRouter } from "@/routers/modules/dynamicRouter";
+import { TabsStore } from "@/stores/modules/tabs";
+import { HOME_URL } from "@/config/config";
+import { ElNotification } from "element-plus";
+import { getTimeState } from "@/utils/util";
 
 const router = useRouter();
+const tabsStore = TabsStore();
+const globalStore = GlobalStore();
 
 // 定义 formRef（校验规则）
 type FormInstance = InstanceType<typeof ElForm>;
@@ -57,23 +65,6 @@ const loginRules = reactive({
 
 const loading = ref(false);
 const loginForm = reactive({ username: "", password: "" });
-// const login = (formEl: FormInstance | undefined) => {
-// 	if (!formEl) return;
-// 	formEl.validate();
-// };
-// const login = async (formEl: FormInstance | undefined) => {
-// 	if (!formEl) return;
-// 	formEl.validate(async (valid, fields) => {
-// 		if (valid) {
-// 			const { data } = await loginApi(loginForm);
-// 			console.log("data:" + data);
-// 			console.log("submit!");
-// 			// router.push("/");
-// 		} else {
-// 			console.log("error submit!", fields);
-// 		}
-// 	});
-// };
 const login = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate(async valid => {
@@ -83,22 +74,22 @@ const login = (formEl: FormInstance | undefined) => {
 			// 1.执行登录接口
 			const { data } = await loginApi({ username: loginForm.username, password: md5(loginForm.password) });
 			console.log("data:---" + data);
-			// globalStore.setToken(data.access_token);
+			globalStore.setToken(data.access_token);
 
-			// // 2.添加动态路由
-			// await initDynamicRouter();
+			// 2.添加动态路由
+			await initDynamicRouter();
 
-			// // 3.清除上个账号的 tab 信息
-			// tabsStore.closeMultipleTab();
+			// 3.清除上个账号的 tab 信息
+			tabsStore.closeMultipleTab();
 
-			// // 4.跳转到首页
-			// router.push(HOME_URL);
-			// ElNotification({
-			// 	title: getTimeState(),
-			// 	message: "欢迎登录 Geeker-Admin",
-			// 	type: "success",
-			// 	duration: 3000
-			// });
+			// 4.跳转到首页
+			router.push(HOME_URL);
+			ElNotification({
+				title: getTimeState(),
+				message: "欢迎登录 Geeker-Admin",
+				type: "success",
+				duration: 3000
+			});
 		} finally {
 			loading.value = false;
 		}
